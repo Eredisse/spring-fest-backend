@@ -25,16 +25,4 @@ public class TicketController {
         return HttpStatus.OK;
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List> validationErrorHandler(ConstraintViolationException e) {
-        List<String> error = new ArrayList<>(e.getConstraintViolations().size());
-
-        e.getConstraintViolations().forEach(constraintViolation -> {
-            error.add(constraintViolation.getPropertyPath() + ": " + constraintViolation.getMessage());
-        });
-
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-
 }
