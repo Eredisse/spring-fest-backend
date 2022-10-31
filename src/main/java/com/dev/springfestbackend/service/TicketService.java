@@ -30,4 +30,9 @@ public class TicketService {
 
         ticketRepo.saveAll(generatedTickets);
     }
+
+    public List<Ticket> getAllTickets() {
+        return ticketRepo.findAll();
+    }
+
 }
