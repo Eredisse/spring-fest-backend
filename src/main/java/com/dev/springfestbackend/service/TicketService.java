@@ -1,8 +1,10 @@
 package com.dev.springfestbackend.service;
 
 import com.dev.springfestbackend.dto.GenerateTicketsDTO;
+import com.dev.springfestbackend.dto.TicketDTO;
 import com.dev.springfestbackend.entity.Ticket;
 import com.dev.springfestbackend.enums.TicketTypeValues;
+import com.dev.springfestbackend.mapper.TicketMapper;
 import com.dev.springfestbackend.repo.TicketRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.UUID;
 public class TicketService {
 
     private final TicketRepo ticketRepo;
+
+    private final TicketMapper ticketMapper;
 
     public void generateTickets(GenerateTicketsDTO generateTicketsDTO) {
 
@@ -36,8 +40,10 @@ public class TicketService {
         return ticketRepo.findAll();
     }
 
-    public Ticket buyTicketByUser(Long userId, TicketTypeValues ticketType) {
-        return ticketRepo.getFirstAvailableTicketByType(ticketType.toString());
+    public TicketDTO buyTicketByUser(Long userId, TicketTypeValues ticketType) {
+        return ticketMapper.ticketEntityToTicketDto(
+                ticketRepo.getFirstAvailableTicketByType(ticketType.toString()
+                ));
     }
 
 }

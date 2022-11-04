@@ -1,13 +1,15 @@
 package com.dev.springfestbackend.entity;
 
 import com.dev.springfestbackend.enums.TicketTypeValues;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "fest_tickets")
-@NoArgsConstructor
+@NoArgsConstructor @Getter @Setter
 public class Ticket {
 
     @Id

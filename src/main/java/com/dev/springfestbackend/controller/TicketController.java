@@ -1,6 +1,7 @@
 package com.dev.springfestbackend.controller;
 
 import com.dev.springfestbackend.dto.GenerateTicketsDTO;
+import com.dev.springfestbackend.dto.TicketDTO;
 import com.dev.springfestbackend.entity.Ticket;
 import com.dev.springfestbackend.enums.TicketTypeValues;
 import com.dev.springfestbackend.service.TicketService;
@@ -30,8 +31,8 @@ public class TicketController {
     }
 
     @PutMapping("/buy/{userId}/{ticketType}")
-    public Ticket buyTicket(@PathVariable("userId") Long userId,
-                            @PathVariable("ticketType") TicketTypeValues ticketType) {
+    public TicketDTO buyTicket(@PathVariable("userId") Long userId,
+                               @PathVariable("ticketType") TicketTypeValues ticketType) {
 
         return ticketService.buyTicketByUser(userId, ticketType);
     }
