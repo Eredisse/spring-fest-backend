@@ -2,6 +2,7 @@ package com.dev.springfestbackend.service;
 
 import com.dev.springfestbackend.dto.GenerateTicketsDTO;
 import com.dev.springfestbackend.entity.Ticket;
+import com.dev.springfestbackend.enums.TicketTypeValues;
 import com.dev.springfestbackend.repo.TicketRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,10 @@ public class TicketService {
 
     public List<Ticket> getAllTickets() {
         return ticketRepo.findAll();
+    }
+
+    public Ticket buyTicketByUser(Long userId, TicketTypeValues ticketType) {
+        return ticketRepo.getFirstAvailableTicketByType(ticketType.toString());
     }
 
 }
