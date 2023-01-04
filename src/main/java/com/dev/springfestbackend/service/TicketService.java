@@ -3,9 +3,11 @@ package com.dev.springfestbackend.service;
 import com.dev.springfestbackend.dto.GenerateTicketsDTO;
 import com.dev.springfestbackend.dto.TicketDTO;
 import com.dev.springfestbackend.entity.Ticket;
+import com.dev.springfestbackend.entity.User;
 import com.dev.springfestbackend.enums.TicketTypeValues;
 import com.dev.springfestbackend.mapper.TicketMapper;
 import com.dev.springfestbackend.repo.TicketRepo;
+import com.dev.springfestbackend.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class TicketService {
     private final TicketRepo ticketRepo;
 
     private final TicketMapper ticketMapper;
+
+    private final UserRepo userRepo;
 
     public void generateTickets(GenerateTicketsDTO generateTicketsDTO) {
 
@@ -41,9 +45,14 @@ public class TicketService {
     }
 
     public TicketDTO buyTicketByUser(Long userId, TicketTypeValues ticketType) {
-        return ticketMapper.ticketEntityToTicketDto(
-                ticketRepo.getFirstAvailableTicketByType(ticketType.toString()
-                ));
+        User currentUser = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Ticket ticket = ticketRepo.getFirstAvailableTicketByType(ticketType.toString())
+                .orElseThrow(() -> new RuntimeException("No ticket available"));
+        ticket.setAvailable(false);
+        ticket.setUser(currentUser);
+        ticketRepo.save(ticket);
+        return ticketMapper.ticketEntityToTicketDto(ticket);
     }
 
 }
