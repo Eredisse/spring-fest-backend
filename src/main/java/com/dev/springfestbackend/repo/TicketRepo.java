@@ -12,4 +12,6 @@ public interface TicketRepo extends JpaRepository<Ticket, Long> {
             "where t.ticket_type = :ticketType " +
             "and t.is_available = true limit 1", nativeQuery = true)
     Optional<Ticket> getFirstAvailableTicketByType(String ticketType);
+
+    Ticket findByTicketCode(String ticketCode);
 }
