@@ -1,6 +1,5 @@
 package com.dev.springfestbackend.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
@@ -14,4 +13,5 @@ public class UserDTO {
 
     private String password;
 
+    private String password2;
 }
